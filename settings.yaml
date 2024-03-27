@@ -1,0 +1,122 @@
+openapi: 3.0.3
+
+info:
+  title: Game settings
+  description: Настройки игры
+  version: 1.0.0
+
+servers:
+  - url: 'http://localhost:1209'
+
+paths:
+  /backend/props:
+    get:
+      tags:
+        - properties
+      description: Получение настроек игры
+      operationId: getProperties
+      responses:
+        200:
+          description: Настройки игры
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameProperties"
+    post:
+      tags:
+        - properties
+      description: Обновление настроек игры
+      operationId: setProperties
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GameProperties"
+      responses:
+        200:
+          description: Успешно
+
+  /backend/phase:
+    get:
+      tags:
+        - phase
+      description: Получить текущее состояние игры
+      operationId: getGame
+      responses:
+        200:
+          description: Текущее состояние игры
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GamePhase"
+
+  /backend/phase/start:
+    get:
+      tags:
+        - phase
+      description: Начало игры
+      operationId: startGame
+      responses:
+        200:
+          description: Успешно
+  
+  /backend/phase/stop:
+    get:
+      tags:
+        - phase
+      description: Принудительное прекращение игры
+      operationId: stopGame
+      responses:
+        200:
+          description: Успешно
+
+components:
+  schemas:
+    GameProperties:
+      properties:
+        mapHeight:
+          description: Высота поля
+          type: integer
+          default: 20
+        mapWidth:
+          description: Ширина поля
+          type: integer
+          default: 20
+        gameSpeed:
+          description: Скорость игры
+          type: integer
+          default: 80
+
+        cityDensity:
+          description: Плотность генерации городов
+          type: integer
+          default: 50
+        mountainDensity:
+          description: Плотность генерации гор
+          type: integer
+          default: 50
+        mudDensity:
+          description: Плотность генерации болот
+          type: integer
+          default: 50
+
+        moveCenterOnKill:
+          description: Режим игры, в котором столица перемещается после смерти
+          type: boolean
+          default: false
+
+        portals:
+          description: Порталы!
+          type: boolean
+          default: false
+
+        allVisible:
+          description: Всё поле видно сразу
+          type: boolean
+          default: false
+
+    GamePhase:
+      type: string
+      enum:
+        - WAIT
+        - PLAY

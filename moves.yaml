@@ -1,0 +1,59 @@
+openapi: 3.0.3
+
+info:
+  title: Moves
+  description: Обслуживание ходов
+  version: 1.0.0
+
+servers:
+  - url: 'http://localhost:1209'
+
+paths:
+  /backend/move:
+    post:
+      tags:
+        - moves
+      operationId: move
+      description: Зарегистрировать следующий ход
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Move"
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Некорректный ход
+
+components:
+  schemas:
+    Move:
+      required:
+        - from
+        - direction
+      properties:
+        from:
+          $ref: "#/components/schemas/Coordinates"
+        direction:
+          $ref: "#/components/schemas/Direction"
+        count:
+          type: integer
+
+    Coordinates:
+      required:
+        - x
+        - y
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+
+    Direction:
+      type: string
+      enum:
+        - UP
+        - DOWN
+        - LEFT
+        - RIGHT

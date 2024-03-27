@@ -1,0 +1,58 @@
+openapi: 3.0.3
+
+info:
+  title: Game statistic
+  description: Статистика игры
+  version: 1.0.0
+
+servers:
+  - url: 'http://localhost:1209'
+
+paths:
+  /backend/stats:
+    get:
+      tags:
+        - statistic
+      description: Получение статистики игры
+      operationId: getStatistic
+      responses:
+        200:
+          description: New response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameStats"
+
+components:
+  schemas:
+    GameStats:
+      properties:
+        time:
+          type: integer
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserGameStat"
+
+    UserGameStat:
+      required:
+        - user
+        - isAlive
+        - map
+        - cities
+        - army
+      properties:
+        user:
+          $ref: "./users.yaml#/components/schemas/User"
+        isAlive:
+          description: Живой ли юзер
+          type: boolean
+        map:
+          description: Сколько у него земель
+          type: integer
+        cities:
+          description: Сколько у него городов
+          type: integer
+        army:
+          description: Размер его армии
+          type: integer

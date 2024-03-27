@@ -1,0 +1,3 @@
+additionalProperties:
+  npmName: g-api
+  useTags: true

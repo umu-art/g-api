@@ -1,0 +1,61 @@
+openapi: 3.0.3
+
+info:
+  title: Map
+  description: Map
+  version: 1.0.0
+
+servers:
+  - url: 'http://localhost:1209'
+
+paths:
+  /backend/map:
+    get:
+      tags:
+        - map
+      description: Получение карты
+      operationId: getMap
+      responses:
+        200:
+          description: New response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameMap"
+
+components:
+  schemas:
+    GameMap:
+      description: Карта игры, заданная двумерным массивом клеток
+      type: array
+      items:
+        description: Строка карты
+        type: array
+        items:
+          $ref: "#/components/schemas/GameObject"
+
+    GameObject:
+      description: Клетка
+      required:
+        - type-
+      properties:
+        type:
+          $ref: "#/components/schemas/GameObjectType"
+        army:
+          description: Количество армии в клетке
+          type: integer
+        ownerName:
+          description: Владелец
+          type: string
+
+    GameObjectType:
+      description: Тип клетки
+      type: string
+      enum:
+        - CENTER
+        - CITY
+        - MOUNTAIN
+        - MUD
+        - FREE
+        - UNKNOWN_BUILDING
+        - UNKNOWN_FREE

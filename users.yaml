@@ -1,0 +1,118 @@
+openapi: 3.0.3
+
+info:
+  title: Users
+  description: Users
+  version: 1.0.0
+
+servers:
+  - url: 'http://localhost:1209'
+
+paths:
+  /backend/register:
+    post:
+      tags:
+        - users
+      description: Регистрация пользователя
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterData"
+      responses:
+        200:
+          description: Успешно
+        406:
+          description: Игрок с таким именем уже есть
+
+  /backend/remove:
+    post:
+      tags:
+        - users
+      description: Удаление пользователя
+      operationId: remove
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterData"
+      responses:
+        200:
+          description: Успешно
+        404:
+          description: Игрока с таким именем нет
+
+  /backend/isadmin:
+    get:
+      tags:
+        - users
+      description: Проверка, является ли текущий пользователь администратором
+      operationId: isAdmin
+      responses:
+        200:
+          description: Да / нет
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+  /backend/users/all:
+    get:
+      tags:
+        - users
+      description: Получение списка всех пользователей
+      operationId: getAllUsers
+      responses:
+        200:
+          description: Пользователи
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+  /backend/actualize:
+    get:
+      tags:
+        - users
+      description: Актуализация пользователя
+      operationId: actualize
+      responses:
+        200:
+          description: Успешно
+
+components:
+  schemas:
+    RegisterData:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    User:
+      required:
+        - name
+        - color
+        - isMaster
+      properties:
+        name:
+          type: string
+        color:
+          $ref: "#/components/schemas/Color"
+        isMaster:
+          type: boolean
+
+    Color:
+      type: string
+      enum:
+        - RED
+        - GREEN
+        - BLUE
+        - YELLOW
+        - PURPLE
+        - ORANGE
+        - PINK
+        - BROWN
