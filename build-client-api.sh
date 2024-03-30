@@ -1,3 +1,5 @@
+#!/bin/bash
+
 rm -rf ./client
 
 for file in $(find ./ -name '*.yaml'); do
@@ -9,4 +11,4 @@ for file in $(find ./ -name '*.yaml'); do
   java -jar ./generator.jar generate -i $file -g typescript-angular -o ./client -c ./gen_configs/ts.yaml
 done
 
-cp -r ./client ../GUI
+cp -r "${1}" ../GUI

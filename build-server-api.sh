@@ -1,3 +1,5 @@
+#!/bin/bash
+
 rm -rf ./server
 
 for file in $(find ./ -name '*.yaml'); do
